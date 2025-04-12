@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CabX - Book your ride</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <h1 class="fw-bold text-primary">CabX</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="langToggle">हिंदी</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                                <label class="form-check-label" for="darkModeToggle">
+                                    <i class="fas fa-moon"></i>
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-4">
+        <div id="booking-section" class="animate__animated animate__fadeIn">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4" data-en="Book a Ride" data-hi="सवारी बुक करें">Book a Ride</h2>
+                    <form id="booking-form">
+                        <div class="mb-3">
+                            <label for="pickup" class="form-label" data-en="Pickup Location" data-hi="पिकअप स्थान">Pickup Location</label>
+                            <input type="text" class="form-control" id="pickup" placeholder="Enter pickup location" data-en-placeholder="Enter pickup location" data-hi-placeholder="पिकअप स्थान दर्ज करें" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dropoff" class="form-label" data-en="Drop-off Location" data-hi="ड्रॉप-ऑफ स्थान">Drop-off Location</label>
+                            <input type="text" class="form-control" id="dropoff" placeholder="Enter drop-off location" data-en-placeholder="Enter drop-off location" data-hi-placeholder="ड्रॉप-ऑफ स्थान दर्ज करें" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" data-en="Find Rides" data-hi="सवारी खोजें">Find Rides</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="rides-section" class="mt-4 d-none animate__animated">
+            <h3 class="mb-3" data-en="Available Rides" data-hi="उपलब्ध सवारियां">Available Rides</h3>
+            <div class="map-container mb-3">
+                <iframe 
+                    width="100%" 
+                    height="200" 
+                    frameborder="0" 
+                    style="border:0" 
+                    src="https://www.google.com/maps/embed/v1/directions?key=YOUR_API_KEY&origin=Connaught+Place+Delhi&destination=India+Gate+Delhi&mode=driving" 
+                    allowfullscreen>
+                </iframe>
+                <div class="alert alert-info text-center">
+                    <small>Note: This is a sample map. In a production app, you would use an actual Google Maps API key.</small>
+                </div>
+            </div>
+            <div id="ride-options" class="row">
+                <!-- Ride options will be dynamically populated here -->
+            </div>
+            <button id="back-to-search" class="btn btn-outline-secondary mt-3" data-en="Back to Search" data-hi="खोज पर वापस जाएं">Back to Search</button>
+        </div>
+
+        <div id="confirmation-section" class="mt-4 d-none animate__animated">
+            <div class="card shadow-sm border-success">
+                <div class="card-header bg-success text-white">
+                    <h3 class="m-0" data-en="Booking Confirmed!" data-hi="बुकिंग की पुष्टि हो गई!">Booking Confirmed!</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 data-en="Ride Details" data-hi="सवारी विवरण">Ride Details</h4>
+                            <p><strong data-en="Pickup:" data-hi="पिकअप:">Pickup:</strong> <span id="confirm-pickup"></span></p>
+                            <p><strong data-en="Drop-off:" data-hi="ड्रॉप-ऑफ:">Drop-off:</strong> <span id="confirm-dropoff"></span></p>
+                            <p><strong data-en="Vehicle:" data-hi="वाहन:">Vehicle:</strong> <span id="confirm-vehicle"></span></p>
+                            <p><strong data-en="Fare:" data-hi="किराया:">Fare:</strong> <span id="confirm-fare"></span></p>
+                            <p><strong data-en="Payment:" data-hi="भुगतान:">Payment:</strong> Cash on Delivery</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 data-en="Driver Details" data-hi="ड्राइवर विवरण">Driver Details</h4>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="avatar me-3">
+                                    <i class="fas fa-user-circle fa-3x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5 id="driver-name"></h5>
+                                    <p class="mb-0" id="driver-phone"></p>
+                                </div>
+                            </div>
+                            <p><strong data-en="Vehicle Number:" data-hi="वाहन नंबर:">Vehicle Number:</strong> <span id="vehicle-number"></span></p>
+                            <p><strong data-en="ETA:" data-hi="अनुमानित आगमन समय:">ETA:</strong> <span id="eta"></span></p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button id="new-booking" class="btn btn-primary" data-en="Book Another Ride" data-hi="एक और सवारी बुक करें">Book Another Ride</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>© 2023 CabX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/js/data.js"></script>
+    <script src="src/js/app.js"></script>
+</body>
+</html> 

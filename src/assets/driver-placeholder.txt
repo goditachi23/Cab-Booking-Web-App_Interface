@@ -1,0 +1,4 @@
+This is a placeholder file for a driver profile image.
+In a production environment, this would be replaced with an actual profile picture.
+
+For the application to work properly, you should replace this file with an actual image named "driver.png". 
